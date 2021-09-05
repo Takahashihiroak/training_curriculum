@@ -6,7 +6,7 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    Plan.create(plan_params)
+    plan.create(plan_params)
     redirect_to action: :index
   end
 
@@ -17,6 +17,7 @@ class CalendarsController < ApplicationController
   end
 
   def get_week
+
     wdays = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)']
 
   @todays_date = Date.today
@@ -25,10 +26,15 @@ class CalendarsController < ApplicationController
 
   plans = Plan.where(date: @todays_date..@todays_date + 6)
 
-  7.times do |x|
-    today_plans = []
-    plans.each do |plan|
-      today_plans.push(plan.plan) if plan.date == @todays_date + x
+
+    7.times do |x|
+      today_plans = []
+      plans.each do |plan|
+        today_plans.push(plan.plan) if plan.date == @todays_date + x
+      end
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans}
+      @week_days.push(days)
+      
     end
 
     wday_num = Date.today.wday 
