@@ -6,7 +6,7 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    plan.create(plan_params)
+    Plan.create(plan_params)
     redirect_to action: :index
   end
 
